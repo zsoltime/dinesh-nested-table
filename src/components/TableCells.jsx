@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from 'react';
 
 class TableCells extends Component {
   sortIt = path => {
     const sortColumn = { ...this.props.sortColumn };
     if (sortColumn.path === path)
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+      sortColumn.order = sortColumn.order === 'asc' ? 'desc' : 'asc';
     else {
       sortColumn.path = path;
-      sortColumn.order = "asc";
+      sortColumn.order = 'asc';
     }
     this.props.onSort(sortColumn);
   };
@@ -15,19 +15,22 @@ class TableCells extends Component {
     const { data, header } = this.props;
     return (
       <div>
-        <table className="table">
-          <thead>
+        <table className="table table-bordered table-sm">
+          <thead className="thead-dark">
             <tr>
+              <th scope="col">{header.id}</th>
               <th
+                scope="col"
                 onClick={() => {
-                  this.sortIt("name");
+                  this.sortIt('name');
                 }}
               >
                 {header.name}
               </th>
               <th
+                scope="col"
                 onClick={() => {
-                  this.sortIt("companyName");
+                  this.sortIt('companyName');
                 }}
               >
                 {header.companyName}
@@ -35,22 +38,22 @@ class TableCells extends Component {
             </tr>
           </thead>
           <tbody>
-            {data.map(d => {
-              if (d.name.firstName) {
-                return (
-                  <tr key={d.name.firstName}>
-                    <td>{d.name.firstName + ' ' + d.name.lastName}</td>
-                    <td>{d.companyName}</td>
-                  </tr>
-                );
-              }
-              return (
-                <tr key={d.name}>
-                  <td>{d.name}</td>
-                  <td>{d.companyName}</td>
+            {data.map(d => (
+              <Fragment key={d.id}>
+                <tr>
+                  <th className="align-middle" scope="row" rowSpan="2">
+                    {d.id}
+                  </th>
+                  <td>{d.name.firstName}</td>
+                  <td className="align-middle" rowSpan="2">
+                    {d.companyName}
+                  </td>
                 </tr>
-              );
-            })}
+                <tr>
+                  <td>{d.name.lastName}</td>
+                </tr>
+              </Fragment>
+            ))}
           </tbody>
         </table>
       </div>

@@ -602,7 +602,8 @@ const tableData = [
 ];
 
 const headersConfig = {
-  name: 'FullName',
+  id: 'No',
+  name: 'Name',
   companyName: 'Company Name',
 };
 
